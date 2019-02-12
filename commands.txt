@@ -1,0 +1,18 @@
+sudo rabbitmqctl list_queues
+-> wylistowuje dostepne kolejki i liczbe wiadomosci w nich zawartych
+
+sudo rabbitmqctl list_queues name messages_ready messages_unacknowledged
+-> wyswietla liste kolejek i wiadomosci w nich gotowych i nie ack (przetwarzanych)
+
+sudo rabbitmqctl list_exchanges
+-> wyswietla liste exchangeow
+
+sudo rabbitmqctl list_exchanges
+-> lista wszystkich dyspozytorow na serwerze
+
+sudo rabbitmqctl list_bindings
+-> lista polaczniem miedzy dyspozytorami a kolejkami
+
+export CP=.:amqp-client-5.6.0.jar:slf4j-api-1.7.25.jar:slf4j-simple-1.7.25.jar
+-> zmienna lokalna w terminalu
+
