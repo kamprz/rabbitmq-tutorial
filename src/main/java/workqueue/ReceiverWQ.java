@@ -21,9 +21,9 @@ mechanizm message durability
     - wiadomosc jako parametr BasicProperties= MessageProperties.PERSISTENT
     - cos jeszcze -> https://www.rabbitmq.com/confirms.html
 */
-public class Receiver {
+public class ReceiverWQ {
     private final static String QUEUE_NAME = "task_queue";
-    private final static Logger logger = LoggerFactory.getLogger(Receiver.class);
+    private final static Logger logger = LoggerFactory.getLogger(ReceiverWQ.class);
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();

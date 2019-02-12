@@ -1,4 +1,4 @@
-package publish;
+package publishsubscribe;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -17,22 +17,27 @@ exchange types:
 - w metodzie channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes()); pierwszy string to nazwa dyspozytora, pusty to domyslny
 - metoda channel.queueDeclare() tworzy non-durable, exclusive, autodelete queue z wygenerowana nazwa, exclusive dla danego odbiorcy
 - binding - polaczenie pomiedzy kolejka a dyspozytorem
-    - ustawiane poprzez: channel.queueBind(nazwaKolejki, nazwaDyspozytora, routingKey); routingKey - pozniej, mozna dac ""
+    - ustawiane poprzez: channel.queueBind(nazwaKolejki, nazwaDyspozytora, routingKey);
+        - routingKey - ignorowany dla dyspozytora typu fanout, daje sie ""
+        - routingKey - interpretacja zalezna od rodzaju dyspozytora
  */
-public class Sender {
-    private final static String QUEUE_NAME = "task_queue";
-    private final static Logger logger = LoggerFactory.getLogger(Sender.class.getName());
-    public static void main(String[] argv) throws Exception {
+public class PublishLog
+{
+    private final static Logger logger = LoggerFactory.getLogger(PublishLog.class.getName());
+    private static final String EXCHANGE_NAME = "logs";
+
+    public static void main(String[] argv) throws Exception
+    {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");   //tu adres IP
-        try(Connection connection = factory.newConnection();
+        factory.setHost("localhost");
+        try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel())
         {
-            boolean durable = true;
-            channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
-            channel.exchangeDeclare("logs", "fanout");
-            String message = String.join(" ", argv);
-            channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+            channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+
+            String message = argv.length < 1 ? "info: Hello World!" : String.join(" ", argv);
+
+            channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
             logger.info(" [x] Sent '" + message + "'");
         }
     }

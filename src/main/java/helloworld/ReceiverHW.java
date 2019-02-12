@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
-public class Receiver {
+public class ReceiverHW {
     private final static String QUEUE_NAME = "hello";
-    private final static Logger logger = LoggerFactory.getLogger(Receiver.class.getName());
+    private final static Logger logger = LoggerFactory.getLogger(ReceiverHW.class.getName());
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();

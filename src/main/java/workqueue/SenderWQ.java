@@ -7,9 +7,9 @@ import com.rabbitmq.client.MessageProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Sender {
+public class SenderWQ {
     private final static String QUEUE_NAME = "task_queue";
-    private final static Logger logger = LoggerFactory.getLogger(Sender.class.getName());
+    private final static Logger logger = LoggerFactory.getLogger(SenderWQ.class.getName());
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");   //tu adres IP
