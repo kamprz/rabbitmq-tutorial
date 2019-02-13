@@ -31,7 +31,8 @@ public class LogReceiver {
 
             logger.info("Logger[" + creationDate + "] Waiting for messages. To exit press CTRL+C");
 
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            DeliverCallback deliverCallback = (consumerTag, delivery) ->
+            {
                 String message = new String(delivery.getBody(), "UTF-8");
                 logger.info(" [x] Received '" + message + "'");
             };
